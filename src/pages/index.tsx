@@ -9,6 +9,7 @@ export default function Home() {
   return (
     <>
      <h1>Hello</h1>
+     <p>THis is a test to check if it commits</p>
     </>
   )
 }

@@ -1,0 +1,36 @@
+$navBar-Bg-color : rgb(224, 219, 230);
+
+.container {
+  height:7vh;
+  display: flex;
+  flex: auto;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: $navBar-Bg-color;
+  border-bottom: 1px solid;
+  
+
+  .heading {
+    font-size: 30px;
+    padding-left:3rem;
+  }
+
+  .navItemsList {
+    width: 20%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    list-style-type: none;
+    .navItem {
+      list-style-type: none;
+      font-size: 20px;
+      font-weight: 700;
+    }
+  }
+
+  .authenticationContainer{
+    padding-right: 3rem;
+    font-size: 20px;
+  }
+}

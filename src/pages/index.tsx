@@ -1,15 +1,14 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
+import Head from "next/head";
+import Image from "next/image";
+import { Lato } from "next/font/google";
+import styles from "@/styles/Home.module.scss";
+import Navbar from "@/components/nav-bar/Navbar.component";
 
-
-const inter = Inter({ subsets: ['latin'] })
+const inter = Lato({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 export default function Home() {
-  return (
-    <>
-     
-    </>
-  )
+  return <></>;
 }

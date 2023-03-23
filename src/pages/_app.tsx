@@ -1,6 +1,18 @@
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
+import  '../styles/globals.scss'
+import type { AppProps } from "next/app";
+import { Lato } from "next/font/google";
+import Navbar from "@/components/nav-bar/Navbar.component";
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+const lato = Lato({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+});
+
+export default function App({ Component, pageProps }:AppProps) {
+  return (
+    <main className={`${lato.className}`}>
+      <Component {...pageProps}/>
+      <Navbar />
+    </main>
+  );
 }

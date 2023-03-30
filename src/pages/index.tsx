@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Lato } from "next/font/google";
 import styles from "@/styles/Home.module.scss";
 import Navbar from "@/components/nav-bar/Navbar.component";
-import Headlines from "@/components/headlines/Headlines.component";
+import HomePageTopHeadlines from "@/components/headlines/HomePageTopHeadlines.component";
 const inter = Lato({
   weight: "400",
   subsets: ["latin"],
@@ -16,7 +16,7 @@ export default function Home({articles}:any) {
 
   return <>
    <Navbar />
-      <Headlines articles={articles}/>
+      <HomePageTopHeadlines articles={articles}/>
   </>;
 }
 

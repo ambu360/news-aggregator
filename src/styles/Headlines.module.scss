@@ -1,0 +1,22 @@
+.headlinesContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 10px auto;
+    width:80%;
+    
+
+    .singleHeadlineContainer{
+        display: grid;
+        grid-template-columns: 1.75fr 1.5fr;
+
+        .imageContainer{
+            
+            .image {
+                max-width: 100%;
+                object-fit:cover;
+
+            }
+        }
+    }
+}

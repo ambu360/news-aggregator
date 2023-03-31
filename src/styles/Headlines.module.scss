@@ -1,3 +1,5 @@
+$small-screen : 900px;
+
 .headlinesContainer {
     display: flex;
     flex-direction: column;
@@ -8,10 +10,33 @@
 
     .singleHeadlineContainer{
         display: grid;
-        grid-template-columns: 1.75fr 1.5fr;
+        grid-template-columns: 0.75fr 0.75fr;
+        padding: 5px 0;
+        
+        @media screen and ( max-width: $small-screen){
+            display: flex !important;
+            flex-direction: column !important;
+        }
+        .articleContainer {
+            padding: 0 15px;
+            .title{
+                font-size: 2rem;
+            }
+            .author, .publication {
+                font-size: 1rem;
+                font-weight: lighter;
+                text-decoration: underline;
+            }
+            .articleDescription{
+                font-size: 1.25rem;
+                &:first-letter{
+                    font-size: 2rem;
+                }
+            }
+
+        }
 
         .imageContainer{
-            
             .image {
                 max-width: 100%;
                 object-fit:cover;

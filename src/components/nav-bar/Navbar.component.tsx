@@ -16,6 +16,7 @@ export default function Navbar() {
           <p>Contact</p>
         </li>
       </ul>
+      
       <div className={styles.authenticationContainer}>
         <h4>Sign In</h4>
       </div>

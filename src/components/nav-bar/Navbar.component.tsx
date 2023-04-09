@@ -1,24 +1,34 @@
 import styles from "@/styles/Navbar.module.scss";
+import {AiOutlineSearch} from 'react-icons/ai'
+import {Props} from '@/pages/index'
 
-export default function Navbar() {
+export default function Navbar({position}:Props) {
+  
   return (
-    <div className={styles.container}>
+    <div className={styles.navBar}>
+      <div className={styles.navTop}>
+
       <h2 className={styles.heading}>Title</h2>
 
-      <ul className={styles.navItemsList}>
-        <li className={styles.navItem}>
-          <p>Home</p>
-        </li>
-        <li className={styles.navItem}>
-          <p>About</p>
-        </li>
-        <li className={styles.navItem}>
-          <p>Contact</p>
-        </li>
-      </ul>
+      <form className={styles.searchBar}>
+
+        <input className={styles.searchInput} placeholder="Search"></input>
+        <button className={styles.searchButton}><AiOutlineSearch/></button>
+
+      </form>
       
       <div className={styles.authenticationContainer}>
+        <p>setting</p>
         <h4>Sign In</h4>
+      </div>
+      </div>
+      <div className={styles.navBot}>
+        <ul className={styles.navList} >
+          <li className={styles.navListItem}>Home</li>
+          <li className={styles.navListItem}>For you</li>
+          <li className={styles.navListItem}>Following</li>
+          <li className={styles.navListItem}>News showcase</li>
+        </ul>
       </div>
     </div>
   );

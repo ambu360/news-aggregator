@@ -1,6 +1,7 @@
 import styles from '@/styles/Headlines.module.scss'
 import { useState } from "react"
 import { GetStaticProps,NextPage } from "next";
+import Link from 'next/link';
 import { Article } from '@/pages';
 
 
@@ -20,7 +21,9 @@ const [topHeadLines,setTopHeadLines] = useState<Article[]>(articles)
             
             <div className={styles.singleHeadlineContainer} key={article.id}>
                 <div className={styles.articleContainer}>
-                <h2 className={styles.title}>{article.title}</h2>
+                
+                <a href={article.url} target="_blank" rel="noopener noreferrer"><h2  className={styles.title}>{article.title}</h2></a>
+                
                 {
                     article.author?(
                 <p className={styles.author}>-By <em>{article.author}</em></p>

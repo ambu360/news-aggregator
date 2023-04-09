@@ -12,12 +12,14 @@ $small-screen : 1150px;
         display: grid;
         grid-template-columns: 0.75fr 0.75fr;
         padding: 5px 0;
+        border: 1px inset ;
         
         @media screen and ( max-width: $small-screen){
             display: flex !important;
             flex-direction: column !important;
         }
         .articleContainer {
+            margin: 5px 0;
             padding: 0 15px;
             .title{
                 font-size: 2rem;

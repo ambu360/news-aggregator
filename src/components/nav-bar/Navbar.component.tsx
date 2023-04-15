@@ -18,7 +18,7 @@ export default function Navbar({position}:Props) {
       </form>
       
       <div className={styles.authenticationContainer}>
-        <p>setting</p>
+        
         <h4>Sign In</h4>
       </div>
       </div>

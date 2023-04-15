@@ -1,0 +1,21 @@
+
+.weatherIcon{
+    font-size:3.5rem;
+}
+
+.weatherContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    border:1px solid black ;
+    border-radius: 10px;
+    width:200px;
+
+    .imageContainer{
+        font-size: 16px;
+    }
+    .infoContainer {
+        align-items: center;
+    }
+}

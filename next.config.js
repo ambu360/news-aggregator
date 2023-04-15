@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   env:{
   WEATHER_API_KEY : process.env.NEXT_PUBLIC_WEATHER_API_KEY,
-    GEOCODE_API : process.env.NEXT_PUBLIC_GEOCODE_API
+  GEOCODE_API : process.env.NEXT_PUBLIC_GEOCODE_API
   }
 }
 

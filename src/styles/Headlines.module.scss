@@ -1,48 +1,56 @@
 $small-screen : 1150px;
 
-.headlinesContainer {
-    display: flex;
+.headlineMainContainer{
+    display:flex;
     flex-direction: column;
-    justify-content: center;
-    margin: 10px auto;
-    width:75%;
+    justify-content: space-between;
+    border: 1px solid black;
+    border-radius: 10px;
+     padding: 0 15px;
     
 
-    .singleHeadlineContainer{
-        display: grid;
-        grid-template-columns: 0.75fr 0.75fr;
-        padding: 5px 0;
-        border: 1px inset ;
+    .headlinesContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         
-        @media screen and ( max-width: $small-screen){
-            display: flex !important;
-            flex-direction: column !important;
-        }
-        .articleContainer {
-            margin: 5px 0;
-            padding: 0 15px;
-            .title{
-                font-size: 2rem;
+        
+    
+        .singleHeadlineContainer{
+            display: grid;
+            grid-template-columns: 0.75fr 0.75fr;
+            
+            
+            
+            @media screen and ( max-width: $small-screen){
+                display: flex !important;
+                flex-direction: column !important;
             }
-            .author, .publication {
-                font-size: 1rem;
-                font-weight: lighter;
-                text-decoration: underline;
-            }
-            .articleDescription{
-                font-size: 1.25rem;
-                &:first-letter{
-                    font-size: 2rem;
+            .articleContainer {
+                margin: 5px 0;
+               
+                .title{
+                    font-size: 1.75rem;
                 }
+                .author, .publication {
+                    font-size: 1rem;
+                    font-weight: lighter;
+                    text-decoration: underline;
+                }
+                .articleDescription{
+                    font-size: 1rem;
+                    &:first-letter{
+                        font-size: 2rem;
+                    }
+                }
+    
             }
-
-        }
-
-        .imageContainer{
-            .image {
-                max-width: 100%;
-                object-fit:cover;
-
+    
+            .imageContainer{
+                .image {
+                    max-width: 100%;
+                    object-fit:cover;
+                }
             }
         }
     }

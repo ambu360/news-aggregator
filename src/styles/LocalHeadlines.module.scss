@@ -1,0 +1,12 @@
+.articleContainer {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 0 15px;
+
+    .singleHeadlineContainer {
+        margin: 10px 0;
+        
+    }
+}

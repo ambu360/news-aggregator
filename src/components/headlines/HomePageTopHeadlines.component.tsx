@@ -1,44 +1,50 @@
 import styles from '@/styles/Headlines.module.scss'
 import { useState } from "react"
-import { GetStaticProps,NextPage } from "next";
-import Link from 'next/link';
 import { Article } from '@/pages';
 
 
 interface HomePageTopHeadlinesProps {
-    articles: Article[];
+    topHeadLinesprops: Article[];
+    
   }
 
-export default function HomePageTopHeadlines({articles}:HomePageTopHeadlinesProps){
+export default function HomePageTopHeadlines({topHeadLinesprops}:HomePageTopHeadlinesProps){
 
     
-const [topHeadLines,setTopHeadLines] = useState<Article[]>(articles)
-   
+const [topHeadLines,setTopHeadLines] = useState<Article[]>(topHeadLinesprops)
+
     return (
-        <>
+        <main className={styles.headlineMainContainer}>
+            <h2>Top stories.</h2>
         <div className={styles.headlinesContainer}>
-           {topHeadLines.map((article:Article) =>(
+           {topHeadLines.map((topHeadLines:Article) =>(
             
-            <div className={styles.singleHeadlineContainer} key={article.id}>
+            <div className={styles.singleHeadlineContainer} key={topHeadLines.id}>
                 <div className={styles.articleContainer}>
                 
-                <a href={article.url} target="_blank" rel="noopener noreferrer"><h2  className={styles.title}>{article.title}</h2></a>
+                <a href={topHeadLines.url} target="_blank" rel="noopener noreferrer"><h4  className={styles.title}>{topHeadLines.title}</h4></a>
                 
                 {
-                    article.author?(
-                <p className={styles.author}>-By <em>{article.author}</em></p>
+                    topHeadLines.author?(
+                <p className={styles.author}>-By <em>{topHeadLines.author}</em></p>
                     ):(
-                    <p className={styles.publication}>-published by <em>{article.source.name}</em></p>)
+                    <p className={styles.publication}>-published by <em>{topHeadLines.source.name}</em></p>)
                 }
-                <p className = {styles.articleDescription}>{article.description}</p>
+                <p className = {styles.articleDescription}>{topHeadLines.description}</p>
                 </div>
                 <span className={styles.imageContainer}>
-                    <img className={styles.image}src={article.urlToImage}></img>
+                    <img className={styles.image}src={topHeadLines.urlToImage}></img>
                 </span>
             </div>
            ))}
         </div>
-        </>
+        {/*
+        <div className={styles.loclaNewsContainer}>
+                <div className={styles.header}>
+                    <h1>your location</h1>
+                </div>
+            </div>*/}
+        </main>
     )
     
 }

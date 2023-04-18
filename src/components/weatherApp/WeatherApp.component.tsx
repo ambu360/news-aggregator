@@ -1,5 +1,5 @@
 import styles from '@/styles/weatherApp.module.scss'
-import {useEffect, useState} from 'react'
+import {useEffect, useState,Dispatch,SetStateAction} from 'react'
 import {
     WiDaySunny,
     WiCloud,
@@ -11,13 +11,16 @@ import {
     WiDaySnow,
     WiDayFog,
 } from 'react-icons/wi'
+import { LocationDetail } from '@/pages'
 
 
 
 interface WeatherAppProps {
    position:GeolocationCoordinates | null
-   country:string | null
+   country:LocationDetail | null
    currentDay:string
+   weatherLoading:Boolean
+   setWeatherLoading: Dispatch<SetStateAction<boolean>> 
 }
 interface WeatherMain {
     temp:number
@@ -52,13 +55,14 @@ const WEATHER_DESCRIPTION:WEATHER_DESCRIPTION_TYPE = {
     'snow':<WiDaySnow className={styles.weatherIcon}/>,
     'mist':<WiDayFog className={styles.weatherIcon}/>
 }
-export default function WeatherApp({position,country,currentDay}:WeatherAppProps){
+export default function WeatherApp({position,country,currentDay,weatherLoading,setWeatherLoading}:WeatherAppProps){
     
     const [weatherData,setWeatherData] = useState<WeatherDataType | null>()
     useEffect(()=>{
         const fetchWeatherData = async()=>{
            
             if(position){
+                setWeatherLoading(true)
                 const {latitude,longitude}:{latitude:number,longitude:number} = position
                 const weather_api = process.env.WEATHER_API_KEY
         
@@ -85,6 +89,7 @@ export default function WeatherApp({position,country,currentDay}:WeatherAppProps
                     list:weatherList
                 }
                 setWeatherData(cleanedData)
+                setWeatherLoading(false)
             }
         }
         fetchWeatherData()
@@ -92,10 +97,11 @@ export default function WeatherApp({position,country,currentDay}:WeatherAppProps
     
     return(
         <div className={styles.weatherContainer}>
-            {weatherData?(
+            {!weatherLoading && weatherData?(
             <>
             <span className={styles.imageContainer}>
                 {WEATHER_DESCRIPTION[weatherData.list[0].weather.description]}
+                <p>{weatherData.list[0].weather.description}</p>
                 </span>
                 <div className={styles.infoContainer}>
                     <p className={styles.name}>{weatherData.name}</p>

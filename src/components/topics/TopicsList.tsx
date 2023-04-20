@@ -1,8 +1,9 @@
 import styles from '@/styles/TopicsList.module.scss'
 import { Dispatch,SetStateAction, useEffect } from 'react'
-
+import SingleTopic from '../singleTopic/SingleTopic.component'
+import { TopicType } from '@/pages'
 interface TopicListProps{
-    topicsList:string[]
+    topicsList:TopicType[]
    
 }
 
@@ -11,9 +12,9 @@ export default function TopicsList({topicsList}:TopicListProps){
 console.log(topicsList)
     return(
         <main className={styles.topicListContainer}>
-            {topicsList?.map((topic:string)=>{
+            {topicsList?.map((topic:TopicType)=>{
                 return (
-                    <h1>{topic}</h1>
+                    <SingleTopic topic={topic}/>
                 )
             })}
         </main>

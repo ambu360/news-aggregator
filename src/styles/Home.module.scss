@@ -1,19 +1,35 @@
-.brefing{
-    width:75%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin: 10px auto;
+.brefing {
+  width: 75%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px auto;
 }
 
-.articlesContainer{
-    display: grid;
-    align-items: start;
-    width:75%;
-    grid-area: left;
-    margin: 10px auto;
-    grid-template-columns: 2fr 1fr;
-    gap:15px;
+.articlesContainer {
+  display: grid;
+  align-items: start;
+  width: 75%;
+  grid-area: left;
+  margin: 10px auto;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: auto 1fr;
+  gap: 15px;
+
+  .gridItem1 {
     
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  .gridItem2 {
+    grid-row: 1;
+    grid-column: 2;
+  }
+
+  .gridItem3 {
+    grid-row: 2;
+    grid-column: 1 / span 2;
+  }
 }

@@ -17,6 +17,7 @@ const inter = Lato({
   subsets: ["latin"],
 });
 
+
 export interface Article {
   id: string;
   source: {
@@ -32,15 +33,21 @@ export interface Article {
   content: string;
 }
 
-interface DAYS_TYPE {
-  [key: number]: string;
-}
-
 export interface LocationDetail {
   country?: string;
   country_code: string;
   city: string;
 }
+
+export interface TopicType {
+  topic:string 
+  isCategory:boolean
+}
+
+interface DAYS_TYPE {
+  [key: number]: string;
+}
+
 export const DAYS: DAYS_TYPE = {
   0: "Sunday",
   1: "Monday",
@@ -63,7 +70,12 @@ export default function Home({ articles }: { articles: Article[] }) {
     country:""
   });
   const [weatherLoading, setWeatherLoading] = useState<boolean>(false);
-  const [topicsList, setTopicsList] = useState<string[]>(['world','sports','business','technology','entertainment']);
+  const [topicsList, setTopicsList] = useState<TopicType[]>([
+    {topic:'world',isCategory:false},
+    {topic:'sports',isCategory:true},
+    {topic:'business',isCategory:true},
+    {topic:'technology',isCategory:true},
+    {topic:'entertainment',isCategory:true}]);
 
   const date = new Date();
   const day = date.getDay();
@@ -100,8 +112,8 @@ export default function Home({ articles }: { articles: Article[] }) {
   //add current country to topicsList
   useEffect(()=>{
     const currentCountry = country?.country
-    if(currentCountry && !topicsList.includes(currentCountry)){
-      setTopicsList([currentCountry, ...topicsList])
+    if(currentCountry && topicsList[0].topic != currentCountry){
+      setTopicsList([{topic:currentCountry,isCategory:false}, ...topicsList])
     }
   },[country])
 
@@ -122,9 +134,15 @@ export default function Home({ articles }: { articles: Article[] }) {
         />
       </div>
       <div className={styles.articlesContainer}>
+        <div className={styles.gridItem1}>
         <HomePageTopHeadlines topHeadLinesprops={articles} />
+        </div>
+        <div className={styles.gridItem2}>
         <LocalHeadlines country={country} />
+        </div>
+        <div className={styles.gridItem3}>
         <TopicsList topicsList={topicsList}/>
+        </div>
       </div>
     </>
   );

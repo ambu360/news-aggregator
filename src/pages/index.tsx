@@ -158,7 +158,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   if (!data || data.status !== "ok") {
     return {
-      notFound: true,
+      props:{
+        articles:[]
+      }
     };
   }
 

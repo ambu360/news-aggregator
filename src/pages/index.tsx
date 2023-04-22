@@ -90,6 +90,7 @@ export default function Home({ articles }: { articles: Article[] }) {
           setPosition(pos.coords);
           const lat = pos.coords.latitude;
           const long = pos.coords.longitude;
+          console.log(`lat: ${lat}  long:${long}`)
           const weather_api_key = process.env.WEATHER_API_KEY;
           fetch(
             `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${long}&appid=${weather_api_key}`

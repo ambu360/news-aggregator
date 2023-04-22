@@ -81,7 +81,7 @@ export default function Home({ articles }: { articles: Article[] }) {
   const day = date.getDay();
   const currentDay = DAYS[day];
   
-  
+  console.log('ttest git pull')
   //geoLocation => fetch country details =>set country
   useEffect(() => {
     if (navigator.geolocation) {
@@ -157,7 +157,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   if (!data || data.status !== "ok") {
     return {
-      notFound: true,
+      props:{
+        articles:[]
+      }
     };
   }
 

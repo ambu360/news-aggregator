@@ -9,7 +9,6 @@ export default function SingleTopic({ topic }: SingleTopicProps) {
   const [topicHeadlines, setTopicHeadlines] = useState<Article[]>();
   useEffect(() => {
     const fetchTopicHealines = async () => {
-      const apiKey = process.env.NEXT_PUBLIC_NEWS_KEY;
       try {
         const apiKey = process.env.NEXT_PUBLIC_NEWS_KEY;
         if (topic.isCategory) {
@@ -38,14 +37,12 @@ export default function SingleTopic({ topic }: SingleTopicProps) {
       <h4>{topic.topic}</h4>
       <div className={styles.headlinesContainer}>
         {topicHeadlines?.map((article: Article) => {
-         
+
           return (
-            <a href={article.url} target="_blank" rel="noopener noreferrer">
+            <a key={article.title} href={article.url} target="_blank" rel="noopener noreferrer">
               <h5 key={article.title}>{article.title}</h5>
             </a>
-            )
-            
-            
+          )
         })}
       </div>
     </article>

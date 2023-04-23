@@ -9,7 +9,7 @@ import WeatherApp from "@/components/weatherApp/WeatherApp.component";
 import LocalHeadlines from "@/components/localheadlines/LocalHeadlines.component";
 import TopicsList from "@/components/topics/TopicsList";
 
-export interface Props {
+export interface PositionType {
   position: GeolocationCoordinates | null;
 }
 const inter = Lato({
@@ -40,8 +40,8 @@ export interface LocationDetail {
 }
 
 export interface TopicType {
-  topic:string 
-  isCategory:boolean
+  topic: string
+  isCategory: boolean
 }
 
 interface DAYS_TYPE {
@@ -61,26 +61,28 @@ export const DAYS: DAYS_TYPE = {
 
 
 export default function Home({ articles }: { articles: Article[] }) {
-  const CountryName =  new Intl.DisplayNames(['en'], {type: 'region'});
+  const CountryName = new Intl.DisplayNames(['en'], { type: 'region' });
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [position, setPosition] = useState<GeolocationCoordinates | null>(null);
   const [country, setCountry] = useState<LocationDetail | null>({
     country_code: "",
     city: "",
-    country:""
+    country: ""
   });
   const [weatherLoading, setWeatherLoading] = useState<boolean>(false);
   const [topicsList, setTopicsList] = useState<TopicType[]>([
-    {topic:'world',isCategory:false},
-    {topic:'sports',isCategory:true},
-    {topic:'business',isCategory:true},
-    {topic:'technology',isCategory:true},
-    {topic:'entertainment',isCategory:true}]);
+    { topic: 'world', isCategory: false },
+    { topic: 'sports', isCategory: true },
+    { topic: 'business', isCategory: true },
+    { topic: 'technology', isCategory: true },
+    { topic: 'entertainment', isCategory: true }]);
 
   const date = new Date();
   const day = date.getDay();
   const currentDay = DAYS[day];
-  
+
+
+
 
   //geoLocation => fetch country details =>set country
   useEffect(() => {
@@ -97,9 +99,10 @@ export default function Home({ articles }: { articles: Article[] }) {
             .then((response) => response.json())
             .then((data) => {
               setCountry(
-                { city: data[0].name,
+                {
+                  city: data[0].name,
                   country_code: data[0].country.toLowerCase(),
-                  country: CountryName.of(data[0].country)  
+                  country: CountryName.of(data[0].country)
                 });
             })
             .catch((error) => console.error(error));
@@ -110,16 +113,16 @@ export default function Home({ articles }: { articles: Article[] }) {
   }, []);
 
   //add current country to topicsList
-  useEffect(()=>{
+  useEffect(() => {
     const currentCountry = country?.country
-    if(currentCountry && topicsList[0].topic != currentCountry){
-      setTopicsList([{topic:currentCountry,isCategory:false}, ...topicsList])
+    if (currentCountry && topicsList[0].topic != currentCountry) {
+      setTopicsList([{ topic: currentCountry, isCategory: false }, ...topicsList])
     }
-  },[country])
+  }, [country])
 
   return (
     <>
-      <Navbar position={position} />
+      <Navbar country={country} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <div className={styles.brefing}>
         <div>
           <h2>Your breifing</h2>
@@ -135,13 +138,13 @@ export default function Home({ articles }: { articles: Article[] }) {
       </div>
       <div className={styles.articlesContainer}>
         <div className={styles.gridItem1}>
-        <HomePageTopHeadlines topHeadLinesprops={articles} />
+          <HomePageTopHeadlines topHeadLinesprops={articles} />
         </div>
         <div className={styles.gridItem2}>
-        <LocalHeadlines country={country} />
+          <LocalHeadlines country={country} />
         </div>
         <div className={styles.gridItem3}>
-        <TopicsList topicsList={topicsList}/>
+          <TopicsList topicsList={topicsList} />
         </div>
       </div>
     </>
@@ -157,8 +160,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   if (!data || data.status !== "ok") {
     return {
-      props:{
-        articles:[]
+      props: {
+        articles: []
       }
     };
   }

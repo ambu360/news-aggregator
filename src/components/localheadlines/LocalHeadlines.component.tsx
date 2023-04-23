@@ -42,7 +42,7 @@ const LocalHeadlines = ({country}:LocalHeadlinesProps) =>{
             (
                 localHeadlines?.map((article:Article)=>{
                     return (
-                        <div className={styles.singleHeadlineContainer}>
+                        <div key ={article.title}className={styles.singleHeadlineContainer}>
                             <a href={article.url} target="_blank" rel="noopener noreferrer"><h3>{article.title}</h3></a>
                             <p>{article.publishedAt}</p>
                             <p>By {(article.author)?

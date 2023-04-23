@@ -1,7 +1,10 @@
+@import 'variables';
+
 .articleContainer {
+    background-color: $secondary-background-color;
     display: flex;
     flex-direction: column;
-    border: 1px solid black;
+    border: 1px solid $primary-border-color;
     border-radius: 17px;
     padding: 0 15px;
 

@@ -1,8 +1,9 @@
 
+@import 'variables';
 
-$background-color: white;
+
 body {
-margin:0;
-background-color: $background-color;
+    background-color:$primary-background-color;
+    margin:0;
 
 }

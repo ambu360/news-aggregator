@@ -1,14 +1,14 @@
+@import 'variables';
 
-.weatherIcon{
-    font-size:3.5rem;
-}
+
 
 .weatherContainer{
     display: flex;
+    background-color: $secondary-background-color;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    border:1px solid black ;
+    border:1px solid $primary-border-color;
     border-radius: 10px;
     width:250px;
     .imageContainer{

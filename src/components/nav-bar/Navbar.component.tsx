@@ -5,7 +5,7 @@ import { Props } from "@/pages/index";
 export default function Navbar({ position }: Props) {
   return (
     <div className={styles.navBar}>
-      <div className={styles.navTop}>s
+      <div className={styles.navTop}>
         <h2 className={styles.heading}>Title</h2>
 
         <form className={styles.searchBar}>

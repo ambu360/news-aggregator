@@ -32,6 +32,7 @@ interface WeatherMain {
     weather:{
         main:string
         description:string
+        icon:string
     }
     st_txt:Date
 }
@@ -68,6 +69,7 @@ export default function WeatherApp({position,country,currentDay,weatherLoading,s
         
                 const response = await fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&appid=${weather_api}`)
                 const data = await response.json()
+                console.log(data)
                 const weatherList = data.list.map((item:any) =>{
                     return({
                         temp:item.main.temp,
@@ -78,9 +80,11 @@ export default function WeatherApp({position,country,currentDay,weatherLoading,s
                         pressure:item.main.pressure ,
                         weather:{
                             main:item.weather[0].main,
-                            description:item.weather[0].description
+                            description:item.weather[0].description,
+                            icon:item.weather[0].icon
                         },
                         st_txt:item.dt_txt
+                        
                     })
                 })
                 const cleanedData = {
@@ -100,9 +104,10 @@ export default function WeatherApp({position,country,currentDay,weatherLoading,s
             {!weatherLoading && weatherData?(
             <>
             <span className={styles.imageContainer}>
-                {WEATHER_DESCRIPTION[weatherData.list[0].weather.description]}
-                <p>{weatherData.list[0].weather.description}</p>
-                </span>
+            <p>{weatherData.list[0].weather.description}</p>
+                <img className={styles.weatherIcon} src={`http://openweathermap.org/img/w/${weatherData.list[0].weather.icon}.png`}></img>
+            </span>
+                
                 <div className={styles.infoContainer}>
                     <p className={styles.name}>{weatherData.name}</p>
                     <h4 className={styles.temp}>{weatherData.list[0].temp}&deg;C</h4>

@@ -2,16 +2,15 @@ $navBar-Bg-color : rgb(224, 219, 230);
 
 .navBar {
   display: grid;
-  
   grid-template-rows: 1fr,1fr;
   background-color: $navBar-Bg-color;
   border-bottom: 1px solid;
   .navTop{
 
-    height:100px;
+    height:40px;
     display: flex;
     flex: auto;
-    
+    margin-top:15px;
     justify-content: space-between;
     align-items: center;
     width: 100%;
@@ -78,6 +77,7 @@ $navBar-Bg-color : rgb(224, 219, 230);
       flex-direction: row;
 
       .navListItem{
+        margin:0;
         list-style: none;
         padding :0 5px;;
       }

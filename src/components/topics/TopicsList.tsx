@@ -14,7 +14,9 @@ export default function TopicsList({ topicsList }: TopicListProps) {
         <main className={styles.topicListContainer}>
             {topicsList?.map((topic: TopicType) => {
                 return (
-                    <SingleTopic topic={topic} />
+                    <div key={topic.topic}>
+                        <SingleTopic topic={topic} />
+                    </div>
                 )
             })}
         </main>

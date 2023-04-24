@@ -9,7 +9,8 @@
     justify-content: space-around;
     align-items: center;
     border:1px solid $primary-border-color;
-    border-radius: 10px;
+    border-width: medium;
+    border-radius: $primary-border-radius;
     width:250px;
     .imageContainer{
         display: grid;

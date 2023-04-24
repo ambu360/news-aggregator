@@ -69,7 +69,7 @@ export default function WeatherApp({position,country,currentDay,weatherLoading,s
         
                 const response = await fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&appid=${weather_api}`)
                 const data = await response.json()
-                console.log(data)
+                
                 const weatherList = data.list.map((item:any) =>{
                     return({
                         temp:item.main.temp,

@@ -10,7 +10,8 @@ $small-screen : 1150px;
     justify-content: space-between;
     background-color: $secondary-background-color;
     border: 1px solid $primary-border-color;
-    border-radius: 17px;
+    border-width: medium;
+    border-radius: $primary-border-radius;
      padding: 0 15px;
     
 

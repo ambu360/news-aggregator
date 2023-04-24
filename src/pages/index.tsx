@@ -124,8 +124,8 @@ export default function Home({ articles }: { articles: Article[] }) {
     <>
       <Navbar country={country} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <div className={styles.brefing}>
-        <div>
-          <h2>Your breifing</h2>
+        <div className={styles.briefingTitle}>
+          <h2 >Your breifing</h2>
           <p>{currentDay}</p>
         </div>
         <WeatherApp

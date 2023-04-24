@@ -24,7 +24,6 @@ const LocalHeadlines = ({country}:LocalHeadlinesProps) =>{
         const apiKey = process.env.NEXT_PUBLIC_NEWS_KEY; 
         const country_code = country.country_code
         const city = country.city
-        console.log(`countryCode:${country_code} city:${city}`)
         const response = await fetch(`http://newsapi.org/v2/everything?q=${city}&from=${lastWeek}&to=${today}&language=en&pageSize=5&apiKey=${apiKey}`)
         const data = await response.json()
         setLocalHeadlines(data.articles)

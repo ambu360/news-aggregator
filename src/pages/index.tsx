@@ -77,6 +77,8 @@ export default function Home({ articles }: { articles: Article[] }) {
     { topic: 'technology', isCategory: true },
     { topic: 'entertainment', isCategory: true }]);
 
+    const [beginSearchFetch, setBeginSearchFetch] = useState<boolean>(false)
+
   const date = new Date();
   const day = date.getDay();
   const currentDay = DAYS[day];
@@ -122,7 +124,12 @@ export default function Home({ articles }: { articles: Article[] }) {
 
   return (
     <>
-      <Navbar country={country} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <Navbar country={country} 
+      searchTerm={searchTerm} 
+      setSearchTerm={setSearchTerm} 
+      beginSearchFetch = {beginSearchFetch}
+      setBeginSearchFetch = {setBeginSearchFetch}
+      />
       <div className={styles.brefing}>
         <div className={styles.briefingTitle}>
           <h2 >Your breifing</h2>

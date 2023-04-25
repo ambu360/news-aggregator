@@ -3,17 +3,33 @@ import { useState, useEffect } from 'react'
 import { Article, DAYS, LocationDetail } from "@/pages"
 import Loader from '@/components/loader/Loader.component'
 import moment from 'moment';
+import useSWR from 'swr'
 interface LocalHeadlinesProps {
 
     country: LocationDetail | null
 }
 
 const LocalHeadlines = ({ country }: LocalHeadlinesProps) => {
-    const [localHeadlines, setLocalHeadlines] = useState<Article[]>()
+    //const [localHeadlines, setLocalHeadlines] = useState<Article[]>()
     const [localHeadlinesLoading, setLocalHeadlinesLoading] = useState<boolean>(false)
-    const [errorMessage, setErrorMessage] = useState<string | null>(null)
+   // const [errorMessage, setErrorMessage] = useState<string | null>(null)
+       const today = new Date()
+                const lastWeek = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000)
     //fetch and set localHeadlines
-    useEffect(() => {
+    const { data: localHeadlines, error: errorMessage } = useSWR(
+        
+        country
+          ? `http://newsapi.org/v2/everything?q=${country.city}&from=${lastWeek}&to=${today}&language=en&pageSize=5&apiKey=${process.env.NEXT_PUBLIC_NEWS_KEY}`
+          : null,
+        async (url) => {
+          const response = await fetch(url);
+          const data = await response.json();
+          console.log(data.articles)
+          return data.articles;
+
+        }
+      );
+   /* useEffect(() => {
         async function fetchLocalHeadlines() {
             setLocalHeadlinesLoading(true)
             if (country) {
@@ -33,7 +49,7 @@ const LocalHeadlines = ({ country }: LocalHeadlinesProps) => {
         }
         fetchLocalHeadlines()
 
-    }, [country])
+    }, [country])*/
 
     function formatPublishedAt(date: string) {
         return moment(date).format('MMMM DD, YYYY');

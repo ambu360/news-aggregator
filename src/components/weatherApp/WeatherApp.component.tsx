@@ -1,20 +1,7 @@
 import styles from '@/styles/weatherApp.module.scss'
 import { useEffect, useState, Dispatch, SetStateAction } from 'react'
-import {
-    WiDaySunny,
-    WiCloud,
-    WiDaySunnyOvercast,
-    WiCloudy,
-    WiDayRain,
-    WiDayShowers,
-    WiDayThunderstorm,
-    WiDaySnow,
-    WiDayFog,
-} from 'react-icons/wi'
 import { LocationDetail } from '@/pages'
-
-
-
+import useSWR from 'swr'
 interface WeatherAppProps {
     position: GeolocationCoordinates | null
     weatherLoading: Boolean
@@ -44,10 +31,22 @@ interface WEATHER_DESCRIPTION_TYPE {
 }
 
 
+const fetcher = (...args) => {
+    fetch(...args)
+    .then(res => res.json())
+}
+
 export default function WeatherApp({ position, weatherLoading, setWeatherLoading }: WeatherAppProps) {
 
-    const [weatherData, setWeatherData] = useState<WeatherDataType | null>()
-    useEffect(() => {
+    // create hook for useSWR=> https://refine.dev/blog/data-fetching-next-js-useswr/
+
+    
+    /*const {data: results,error,isLoading} = useSWR<WeatherDataType,string,boolean>(`http://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&appid=${weather_api}`,fetcher)
+    */
+
+    
+    //const [weatherData, setWeatherData] = useState<WeatherDataType | null>();
+    /*useEffect(() => {
         const fetchWeatherData = async () => {
 
             if (position) {
@@ -85,7 +84,9 @@ export default function WeatherApp({ position, weatherLoading, setWeatherLoading
             }
         }
         fetchWeatherData()
-    }, [position])
+    }, [position])*/
+
+    
 
     return (
         <div className={styles.weatherContainer}>

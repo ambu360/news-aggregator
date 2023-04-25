@@ -1,5 +1,5 @@
 import { GetServerSideProps } from "next";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
 import { nanoid } from "nanoid";
 import { Lato } from "next/font/google";
 import styles from "@/styles/Home.module.scss";
@@ -8,7 +8,7 @@ import HomePageTopHeadlines from "@/components/headlines/HomePageTopHeadlines.co
 import WeatherApp from "@/components/weatherApp/WeatherApp.component";
 import LocalHeadlines from "@/components/localheadlines/LocalHeadlines.component";
 import TopicsList from "@/components/topics/TopicsList";
-
+import SearchContext from '@/context/context'
 export interface PositionType {
   position: GeolocationCoordinates | null;
 }
@@ -61,8 +61,8 @@ export const DAYS: DAYS_TYPE = {
 
 
 export default function Home({ articles }: { articles: Article[] }) {
+  const context = useContext(SearchContext)
   const CountryName = new Intl.DisplayNames(['en'], { type: 'region' });
-  const [searchTerm, setSearchTerm] = useState<string>("");
   const [position, setPosition] = useState<GeolocationCoordinates | null>(null);
   const [country, setCountry] = useState<LocationDetail | null>({
     country_code: "",
@@ -77,8 +77,7 @@ export default function Home({ articles }: { articles: Article[] }) {
     { topic: 'technology', isCategory: true },
     { topic: 'entertainment', isCategory: true }]);
 
-    const [beginSearchFetch, setBeginSearchFetch] = useState<boolean>(false)
-
+    
   const date = new Date();
   const day = date.getDay();
   const currentDay = DAYS[day];
@@ -124,11 +123,11 @@ export default function Home({ articles }: { articles: Article[] }) {
 
   return (
     <>
-      <Navbar country={country} 
-      searchTerm={searchTerm} 
-      setSearchTerm={setSearchTerm} 
-      beginSearchFetch = {beginSearchFetch}
-      setBeginSearchFetch = {setBeginSearchFetch}
+      <Navbar 
+      searchTerm={context.searchTerm} 
+      setSearchTerm={context.setSearchTerm} 
+      beginSearchFetch = {context.beginSearchFetch}
+      setBeginSearchFetch = {context.setBeginSearchFetch}
       />
       <div className={styles.brefing}>
         <div className={styles.briefingTitle}>

@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction } from 'react'
 import Search from '@/components/search/Search.component'
 
 interface NavBarProps {
-  country: LocationDetail | null
+  
   searchTerm: string
   setSearchTerm: Dispatch<SetStateAction<string>>
   beginSearchFetch:boolean
@@ -14,9 +14,7 @@ interface NavBarProps {
 }
 
 
-export default function Navbar({ country, searchTerm, setSearchTerm ,beginSearchFetch,setBeginSearchFetch}: NavBarProps) {
-  
-
+export default function Navbar({  searchTerm, setSearchTerm ,beginSearchFetch,setBeginSearchFetch}: NavBarProps) {
   
 
   return (
@@ -28,7 +26,6 @@ export default function Navbar({ country, searchTerm, setSearchTerm ,beginSearch
           setSearchTerm = {setSearchTerm}
           beginSearchFetch = {beginSearchFetch}
           setBeginSearchFetch={setBeginSearchFetch}
-         
         />
 
         <div className={styles.authenticationContainer}>

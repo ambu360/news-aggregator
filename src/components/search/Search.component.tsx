@@ -1,6 +1,7 @@
 import styles from '@/styles/Search.module.scss'
 import {useState,useEffect,Dispatch,SetStateAction} from 'react'
 import { AiOutlineSearch } from "react-icons/ai";
+import {useRouter} from 'next/router'
 
 interface SearchProps {
     searchTerm:string
@@ -9,11 +10,12 @@ interface SearchProps {
     setSearchTerm: Dispatch<SetStateAction<string>>
 }
 export default function Search({searchTerm,setSearchTerm,beginSearchFetch,setBeginSearchFetch}:SearchProps){
-
+    const router = useRouter();
+    
     const handleSubmit = (e: React.FormEvent<HTMLInputElement>) => {
-        e.preventDefault()
-        setBeginSearchFetch(true)
-        
+        e.preventDefault();
+        setBeginSearchFetch(true);
+        router.push(`/searchterm?query=${searchTerm}`);
       }
 
     useEffect(() => {

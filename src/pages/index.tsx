@@ -29,7 +29,7 @@ export interface Article {
   description?: string;
   url: string;
   urlToImage?: string;
-  publishedAt: Date;
+  publishedAt: Date | string ;
   content: string;
 }
 

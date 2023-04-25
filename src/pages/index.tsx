@@ -136,8 +136,6 @@ export default function Home({ articles }: { articles: Article[] }) {
         </div>
         <WeatherApp
           position={position}
-          country={country}
-          currentDay={currentDay}
           weatherLoading={weatherLoading}
           setWeatherLoading={setWeatherLoading}
         />

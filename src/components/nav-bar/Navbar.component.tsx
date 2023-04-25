@@ -1,21 +1,18 @@
 import styles from "@/styles/Navbar.module.scss";
-import { useEffect, useState } from 'react'
-
-import { LocationDetail } from "@/pages/index";
 import { Dispatch, SetStateAction } from 'react'
 import Search from '@/components/search/Search.component'
 
 interface NavBarProps {
-  
+
   searchTerm: string
   setSearchTerm: Dispatch<SetStateAction<string>>
-  beginSearchFetch:boolean
-  setBeginSearchFetch:Dispatch<SetStateAction<boolean>>
+  beginSearchFetch: boolean
+  setBeginSearchFetch: Dispatch<SetStateAction<boolean>>
 }
 
 
-export default function Navbar({  searchTerm, setSearchTerm ,beginSearchFetch,setBeginSearchFetch}: NavBarProps) {
-  
+export default function Navbar({ searchTerm, setSearchTerm, beginSearchFetch, setBeginSearchFetch }: NavBarProps) {
+
 
   return (
     <div className={styles.navBar}>
@@ -23,8 +20,8 @@ export default function Navbar({  searchTerm, setSearchTerm ,beginSearchFetch,se
         <h2 className={styles.heading}>Title</h2>
 
         <Search searchTerm={searchTerm}
-          setSearchTerm = {setSearchTerm}
-          beginSearchFetch = {beginSearchFetch}
+          setSearchTerm={setSearchTerm}
+          beginSearchFetch={beginSearchFetch}
           setBeginSearchFetch={setBeginSearchFetch}
         />
 

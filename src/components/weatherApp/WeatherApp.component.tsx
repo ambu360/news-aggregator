@@ -67,6 +67,7 @@ export default function WeatherApp({ data }: WeatherAppProps) {
         fetchWeatherData()
     }, [position])
     */
+   
     return (
              <div className={styles.weatherContainer}>
     {(data) ? (data &&

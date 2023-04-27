@@ -1,15 +1,15 @@
 import { GetServerSideProps } from "next";
 import { useState, useEffect, useContext } from "react";
 import { nanoid } from "nanoid";
-import useSWR from 'swr';
+import useSWR from "swr";
 import { Lato } from "next/font/google";
 import styles from "@/styles/Home.module.scss";
 import Navbar from "@/components/nav-bar/Navbar.component";
 import HomePageTopHeadlines from "@/components/headlines/HomePageTopHeadlines.component";
-import WeatherApp  from "@/components/weatherApp/WeatherApp.component";
+import WeatherApp from "@/components/weatherApp/WeatherApp.component";
 import LocalHeadlines from "@/components/localheadlines/LocalHeadlines.component";
 import TopicsList from "@/components/topics/TopicsList";
-import SearchContext from '@/context/context'
+import SearchContext from "@/context/context";
 export interface PositionType {
   position: GeolocationCoordinates | null;
 }
@@ -19,27 +19,26 @@ const inter = Lato({
 });
 
 export interface WeatherMain {
-  main:{
-
-      temp: number
-      feels_like: number
-      temp_min: number
-      temp_max: number
-      humidity: number
-      pressure: number
-  }
+  main: {
+    temp: number;
+    feels_like: number;
+    temp_min: number;
+    temp_max: number;
+    humidity: number;
+    pressure: number;
+  };
   weather: {
-          main: string
-          description: string
-          icon: string
-}
-      st_txt: Date
+    main: string;
+    description: string;
+    icon: string;
+  };
+  st_txt: Date;
 }
 
 export interface WeatherDataType {
-    id: number
-  name: string
-  list: WeatherMain[]
+  id: number;
+  name: string;
+  list: WeatherMain[];
 }
 export interface Article {
   id: string;
@@ -63,8 +62,8 @@ export interface LocationDetail {
 }
 
 export interface TopicType {
-  topic: string
-  isCategory: boolean
+  topic: string;
+  isCategory: boolean;
 }
 
 interface DAYS_TYPE {
@@ -81,89 +80,92 @@ export const DAYS: DAYS_TYPE = {
   6: "Saturday",
 };
 
-const fetcher = (...args) => fetch(...args).then(res => res.json())
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function Home({ articles }: { articles: Article[] }) {
-  const context = useContext(SearchContext)
-  const CountryName = new Intl.DisplayNames(['en'], { type: 'region' });
+  const context = useContext(SearchContext);
+  const CountryName = new Intl.DisplayNames(["en"], { type: "region" });
   const [country, setCountry] = useState<LocationDetail | null>({
     country_code: "",
     city: "",
-    country: ""
+    country: "",
   });
   const date = new Date();
   const day = date.getDay();
-  const currentDay = DAYS[day]
-  const [position,setPosition] = useState<GeolocationCoordinates| null>()
-  const {data,error,isLoading} = useSWR<WeatherDataType,string>(`api/weather?latitude=${position?.latitude}&longitude=${position?.longitude}`,fetcher)
-  useEffect(()=>{
-  if(navigator.geolocation){
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        setPosition(pos.coords);
-        
-      },
-      (error) => console.log(error)
-    );
-  }
- },[])
-
-//set country value based on position
-useEffect(()=>{
-  const fetchCountryData = async() =>{
-    if(position){
-      const lat = position.latitude
-      const lng = position.longitude
-      const weather_api_key = process.env.WEATHER_API_KEY;
-      try{
-        const response = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lng}&appid=${weather_api_key}`)
-        const data = await response.json()
-        setCountry({
-          city: data[0].name,
-          country_code: data[0].country.toLowerCase(),
-          country: CountryName.of(data[0].country)
-      })
-      }catch(error){
-        console.log(error)
-      }
-      
+  const currentDay = DAYS[day];
+  const [position, setPosition] = useState<GeolocationCoordinates | null>();
+  const { data, error, isLoading } = useSWR<WeatherDataType, string>(
+    `api/weather?latitude=${position?.latitude}&longitude=${position?.longitude}`,
+    fetcher
+  );
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          setPosition(pos.coords);
+        },
+        (error) => console.log(error)
+      );
     }
-  }
-  fetchCountryData()
-},[data])
+  }, []);
+
+  //set country value based on position
+  useEffect(() => {
+    const fetchCountryData = async () => {
+      if (position) {
+        const lat = position.latitude;
+        const lng = position.longitude;
+        const weather_api_key = process.env.WEATHER_API_KEY;
+        try {
+          const response = await fetch(
+            `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lng}&appid=${weather_api_key}`
+          );
+          const data = await response.json();
+          setCountry({
+            city: data[0].name,
+            country_code: data[0].country.toLowerCase(),
+            country: CountryName.of(data[0].country),
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    fetchCountryData();
+  }, [data]);
 
   return (
-
     <>
-     <Navbar
-      searchTerm={context.searchTerm}
-      setSearchTerm={context.setSearchTerm}
-      beginSearchFetch = {context.beginSearchFetch}
-      setBeginSearchFetch = {context.setBeginSearchFetch}
+      <Navbar
+        searchTerm={context.searchTerm}
+        setSearchTerm={context.setSearchTerm}
+        beginSearchFetch={context.beginSearchFetch}
+        setBeginSearchFetch={context.setBeginSearchFetch}
       />
       <div className={styles.brefing}>
         <div className={styles.briefingTitle}>
-          <h2 >Your breifing</h2>
+          <h2>Your breifing</h2>
           <p>{currentDay}</p>
         </div>
         {isLoading ? (
-      <p>Loading...</p>
-    ) : error ? (
-      <div>Error: {error}</div>
-    ) : data ? (
-      <WeatherApp data={data} />
-    ) : null}
+          <p>Loading...</p>
+        ) : error ? (
+          <div>Error: {error}</div>
+        ) : data ? (
+          <WeatherApp data={data} />
+        ) : null}
       </div>
-    
-    <div className={styles.articlesContainer}>
-    <div className={styles.gridItem1}>
+
+      <div className={styles.articlesContainer}>
+        <div className={styles.gridItem1}>
           <HomePageTopHeadlines topHeadLinesprops={articles} />
         </div>
-        
-        
+        <div className={styles.gridItem2}>
+          <LocalHeadlines country={country} />
+        </div>
       </div>
-</>
-  ) 
+    </>
+  );
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
@@ -176,8 +178,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
   if (!data || data.status !== "ok") {
     return {
       props: {
-        articles: []
-      }
+        articles: [],
+      },
     };
   }
 
@@ -191,7 +193,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     },
   };
 };
-  /*
+/*
   const context = useContext(SearchContext)
   const CountryName = new Intl.DisplayNames(['en'], { type: 'region' });
   const [position, setPosition] = useState<GeolocationCoordinates | null>(null);
@@ -220,11 +222,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
       navigator.geolocation.getCurrentPosition(onSuccess, reject)
     });
   }*/
-
-  
-
-  
-
 
 /*//geoLocation => fetch country details =>set country
  useEffect(() => {

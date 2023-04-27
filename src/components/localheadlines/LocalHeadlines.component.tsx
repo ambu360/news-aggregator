@@ -3,15 +3,21 @@ import { useState, useEffect } from 'react'
 import { Article, DAYS, LocationDetail } from "@/pages"
 import Loader from '@/components/loader/Loader.component'
 import moment from 'moment';
+import useSWR from 'swr'
 interface LocalHeadlinesProps {
 
     country: LocationDetail | null
 }
 
+const fetcher = (...args) => fetch(...args).then(res => res.json())
+
 const LocalHeadlines = ({ country }: LocalHeadlinesProps) => {
     const [localHeadlines, setLocalHeadlines] = useState<Article[]>()
     const [localHeadlinesLoading, setLocalHeadlinesLoading] = useState<boolean>(false)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
+    const {data,error,isLoading} = useSWR<Article[],string>(`api/localHeadlines?city=${country?.city}`,fetcher)
+    console.log(data)
     //fetch and set localHeadlines
     useEffect(() => {
         async function fetchLocalHeadlines() {
@@ -41,6 +47,28 @@ const LocalHeadlines = ({ country }: LocalHeadlinesProps) => {
 
     return (
         <main className={styles.articleContainer}>
+            {isLoading?(
+                <p>Loading</p>
+            ):(
+                error?(
+                    <p>error</p>
+                ):(
+                    data?.map((article:Article)=>{
+                        return (
+                            <div key={article.title} className={styles.singleHeadlineContainer}>
+                            <a href={article.url} target="_blank" rel="noopener noreferrer">
+                                <h3>{article.title}</h3>
+                            </a>
+                            <p>{formatPublishedAt(article.publishedAt)}</p>
+                            <p>By {article.author || article.source.name}</p>
+                            {article.description && <p>{article.description}</p>}
+                        </div>
+                        )
+                    })
+                )
+            )}
+        </main>
+        /*<main className={styles.articleContainer}>
             <h2>Whats happening in {country ? country.city : 'your selected country'}</h2>
             { localHeadlinesLoading ? (
                 <Loader />
@@ -56,7 +84,7 @@ const LocalHeadlines = ({ country }: LocalHeadlinesProps) => {
                     {article.description && <p>{article.description}</p>}
                 </div>
             ))}
-        </main>
+        </main>*/
     )
 }
 

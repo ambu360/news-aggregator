@@ -1,6 +1,7 @@
 import { GetServerSideProps } from "next";
-import { useState, useEffect,useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { nanoid } from "nanoid";
+import useSWR from 'swr';
 import { Lato } from "next/font/google";
 import styles from "@/styles/Home.module.scss";
 import Navbar from "@/components/nav-bar/Navbar.component";
@@ -29,7 +30,7 @@ export interface Article {
   description?: string;
   url: string;
   urlToImage?: string;
-  publishedAt: Date | string ;
+  publishedAt: Date | string;
   content: string;
 }
 
@@ -63,7 +64,7 @@ export const DAYS: DAYS_TYPE = {
 export default function Home({ articles }: { articles: Article[] }) {
   const context = useContext(SearchContext)
   const CountryName = new Intl.DisplayNames(['en'], { type: 'region' });
-  const [position, setPosition] = useState<GeolocationCoordinates | null>(null);
+  //const [position, setPosition] = useState<GeolocationCoordinates | null>(null);
   const [country, setCountry] = useState<LocationDetail | null>({
     country_code: "",
     city: "",
@@ -77,16 +78,33 @@ export default function Home({ articles }: { articles: Article[] }) {
     { topic: 'technology', isCategory: true },
     { topic: 'entertainment', isCategory: true }]);
 
-    
+
   const date = new Date();
   const day = date.getDay();
   const currentDay = DAYS[day];
 
+  function positionFetcher() {
+    return new Promise((resolve, reject) => {
+      function onSuccess({ coords }) {
+        resolve([coords.latitude, coords.longitude])
+      }
+      navigator.geolocation.getCurrentPosition(onSuccess, reject)
+    });
+  }
+
+  function weatherFetcher(){
+
+  }
+
+  const { data: position, error, isLoading } = useSWR("geolocation", positionFetcher)
+  //const { data, error, isloading } = useSWR(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${long}&appid=${weather_api_key}`)
 
 
+  return <h1>s</h1>
+}
 
-  //geoLocation => fetch country details =>set country
-  useEffect(() => {
+/*//geoLocation => fetch country details =>set country
+ useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
@@ -99,7 +117,7 @@ export default function Home({ articles }: { articles: Article[] }) {
           )
             .then((response) => response.json())
             .then((data) => {
-              setCountry(
+              setCountry( //ad county!!!!!!!!
                 {
                   city: data[0].name,
                   country_code: data[0].country.toLowerCase(),
@@ -112,8 +130,9 @@ export default function Home({ articles }: { articles: Article[] }) {
       );
     }
   }, []);
-
+  https://newsapi.org/v2/everything?q=&from=Wed%20Apr%2019%202023%2018:57:56%20GMT-0400%20(Eastern%20Daylight%20Time)&to=Wed%20Apr%2026%202023%2018:57:56%20GMT-0400%20(Eastern%20Daylight%20Time)&language=en&pageSize=5&apiKey=b62019e53671452798bdad0655743680
   //add current country to topicsList
+
   useEffect(() => {
     const currentCountry = country?.country
     if (currentCountry && topicsList[0].topic != currentCountry) {
@@ -121,11 +140,12 @@ export default function Home({ articles }: { articles: Article[] }) {
     }
   }, [country])
 
+
   return (
     <>
-      <Navbar 
-      searchTerm={context.searchTerm} 
-      setSearchTerm={context.setSearchTerm} 
+      <Navbar
+      searchTerm={context.searchTerm}
+      setSearchTerm={context.setSearchTerm}
       beginSearchFetch = {context.beginSearchFetch}
       setBeginSearchFetch = {context.setBeginSearchFetch}
       />
@@ -180,3 +200,4 @@ export const getServerSideProps: GetServerSideProps = async () => {
     },
   };
 };
+*/

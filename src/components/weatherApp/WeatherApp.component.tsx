@@ -45,7 +45,7 @@ interface WEATHER_DESCRIPTION_TYPE {
 
 
 export default function WeatherApp({ position, weatherLoading, setWeatherLoading }: WeatherAppProps) {
-
+    
     const [weatherData, setWeatherData] = useState<WeatherDataType | null>()
     useEffect(() => {
         const fetchWeatherData = async () => {
@@ -53,10 +53,7 @@ export default function WeatherApp({ position, weatherLoading, setWeatherLoading
             if (position) {
                 setWeatherLoading(true)
                 const { latitude, longitude }: { latitude: number, longitude: number } = position
-                const weather_api = process.env.WEATHER_API_KEY
-
-                const response = await fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&appid=${weather_api}`)
-                const data = await response.json()
+               const data = await response.json()
 
                 const weatherList = data.list.map((item: any) => {
                     return ({

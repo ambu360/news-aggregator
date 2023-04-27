@@ -6,7 +6,7 @@ import { Lato } from "next/font/google";
 import styles from "@/styles/Home.module.scss";
 import Navbar from "@/components/nav-bar/Navbar.component";
 import HomePageTopHeadlines from "@/components/headlines/HomePageTopHeadlines.component";
-import WeatherApp from "@/components/weatherApp/WeatherApp.component";
+import WeatherApp  from "@/components/weatherApp/WeatherApp.component";
 import LocalHeadlines from "@/components/localheadlines/LocalHeadlines.component";
 import TopicsList from "@/components/topics/TopicsList";
 import SearchContext from '@/context/context'
@@ -18,7 +18,29 @@ const inter = Lato({
   subsets: ["latin"],
 });
 
+export interface WeatherMain {
+  main:{
 
+      temp: number
+      feels_like: number
+      temp_min: number
+      temp_max: number
+      humidity: number
+      pressure: number
+  }
+  weather: {
+          main: string
+          description: string
+          icon: string
+}
+      st_txt: Date
+}
+
+export interface WeatherDataType {
+    id: number
+  name: string
+  list: WeatherMain[]
+}
 export interface Article {
   id: string;
   source: {
@@ -59,12 +81,44 @@ export const DAYS: DAYS_TYPE = {
   6: "Saturday",
 };
 
-
+const fetcher = (...args) => fetch(...args).then(res => res.json())
 
 export default function Home({ articles }: { articles: Article[] }) {
+  const [position,setPosition] = useState<GeolocationCoordinates| null>()
+  const {data,error,isLoading} = useSWR<WeatherDataType,string>(`api/weather?latitude=${position?.latitude}&longitude=${position?.longitude}`,fetcher)
+  useEffect(()=>{
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setPosition(pos.coords);
+      },
+      (error) => console.log(error)
+    );
+  }
+ },[])
+
+
+ //const { data: position, error, isLoading } = useSWR("api/weather", fetcher)
+  
+  //const { data, error, isloading } = useSWR(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${long}&appid=${weather_api_key}`)
+
+
+  return (
+    <>
+    {isLoading ? (
+      <p>Loading...</p>
+    ) : error ? (
+      <div>Error: {error}</div>
+    ) : data ? (
+      <WeatherApp data={data} />
+    ) : null}
+</>
+  ) 
+}
+  /*
   const context = useContext(SearchContext)
   const CountryName = new Intl.DisplayNames(['en'], { type: 'region' });
-  //const [position, setPosition] = useState<GeolocationCoordinates | null>(null);
+  const [position, setPosition] = useState<GeolocationCoordinates | null>(null);
   const [country, setCountry] = useState<LocationDetail | null>({
     country_code: "",
     city: "",
@@ -83,6 +137,7 @@ export default function Home({ articles }: { articles: Article[] }) {
   const day = date.getDay();
   const currentDay = DAYS[day];
 
+  /*
   function positionFetcher() {
     return new Promise((resolve, reject) => {
       function onSuccess({ coords }) {
@@ -90,18 +145,12 @@ export default function Home({ articles }: { articles: Article[] }) {
       }
       navigator.geolocation.getCurrentPosition(onSuccess, reject)
     });
-  }
+  }*/
 
-  function weatherFetcher(){
+  
 
-  }
+  
 
-  const { data: position, error, isLoading } = useSWR("geolocation", positionFetcher)
-  //const { data, error, isloading } = useSWR(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${long}&appid=${weather_api_key}`)
-
-
-  return <h1>s</h1>
-}
 
 /*//geoLocation => fetch country details =>set country
  useEffect(() => {

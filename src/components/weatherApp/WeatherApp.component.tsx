@@ -1,4 +1,5 @@
 import styles from '@/styles/weatherApp.module.scss'
+import { WeatherDataType } from '@/pages'
 import { useEffect, useState, Dispatch, SetStateAction } from 'react'
 import {
     WiDaySunny,
@@ -16,38 +17,20 @@ import { LocationDetail } from '@/pages'
 
 
 interface WeatherAppProps {
-    position: GeolocationCoordinates | null
-    weatherLoading: Boolean
-    setWeatherLoading: Dispatch<SetStateAction<boolean>>
+  data:WeatherDataType
+ 
 }
-interface WeatherMain {
-    temp: number
-    feels_like: number
-    temp_min: number
-    temp_max: number
-    humidity: number
-    pressure: number
-    weather: {
-        main: string
-        description: string
-        icon: string
-    }
-    st_txt: Date
-}
-interface WeatherDataType {
-    id: number
-    name: string
-    list: WeatherMain[]
-}
+
+
 interface WEATHER_DESCRIPTION_TYPE {
     [key: string]: React.ReactElement
 }
 
 
-export default function WeatherApp({ position, weatherLoading, setWeatherLoading }: WeatherAppProps) {
+export default function WeatherApp({ data }: WeatherAppProps) {
     
     const [weatherData, setWeatherData] = useState<WeatherDataType | null>()
-    useEffect(() => {
+    /*useEffect(() => {
         const fetchWeatherData = async () => {
 
             if (position) {
@@ -83,19 +66,19 @@ export default function WeatherApp({ position, weatherLoading, setWeatherLoading
         }
         fetchWeatherData()
     }, [position])
-
+    */
     return (
-        <div className={styles.weatherContainer}>
-            {!weatherLoading && weatherData ? (
+             <div className={styles.weatherContainer}>
+    {(data) ? (data &&
                 <>
                     <span className={styles.imageContainer}>
-                        <p>{weatherData.list[0].weather.description}</p>
-                        <img className={styles.weatherIcon} src={`http://openweathermap.org/img/w/${weatherData.list[0].weather.icon}.png`}></img>
+                        <p>{data.list[0].weather[0].description}</p>
+                        <img className={styles.weatherIcon} src={`http://openweathermap.org/img/w/${data.list[0].weather[0].icon}.png`}></img>
                     </span>
 
                     <div className={styles.infoContainer}>
-                        <p className={styles.name}>{weatherData.name}</p>
-                        <h4 className={styles.temp}>{weatherData.list[0].temp}&deg;C</h4>
+                        <p className={styles.name}>{data.name}</p>
+                        <h4 className={styles.temp}>{data.list[0].temp}&deg;C</h4>
                     </div>
                 </>
             ) : (

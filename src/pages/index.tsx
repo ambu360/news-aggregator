@@ -98,6 +98,13 @@ export default function Home({ articles }: { articles: Article[] }) {
     `api/weather?latitude=${position?.latitude}&longitude=${position?.longitude}`,
     fetcher
   );
+  const [topicsList, setTopicsList] = useState<TopicType[]>([
+    { topic: 'world', isCategory: false },
+    { topic: 'sports', isCategory: true },
+    { topic: 'business', isCategory: true },
+    { topic: 'technology', isCategory: true },
+    { topic: 'entertainment', isCategory: true }]);
+
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -134,6 +141,13 @@ export default function Home({ articles }: { articles: Article[] }) {
     fetchCountryData();
   }, [data]);
 
+  useEffect(() => {
+    const currentCountry = country?.country
+    if (currentCountry && topicsList[0].topic != currentCountry) {
+      setTopicsList([{ topic: currentCountry, isCategory: false }, ...topicsList])
+    }
+  }, [country])
+
   return (
     <>
       <Navbar
@@ -162,6 +176,9 @@ export default function Home({ articles }: { articles: Article[] }) {
         </div>
         <div className={styles.gridItem2}>
           <LocalHeadlines country={country} />
+        </div>
+        <div className={styles.gridItem3}>
+          <TopicsList topicsList={topicsList} />
         </div>
       </div>
     </>

@@ -69,7 +69,7 @@ const LocalHeadlines = ({ country }: LocalHeadlinesProps) => {
                     </a>
                     <p>{formatPublishedAt(article.publishedAt)}</p>
                     <p>By {article.author || article.source.name}</p>
-                    {article.description && <p>{article.description}</p>}
+                    {article.description && <p>{article.description.replace(/<[^>]*>?/gm, '')}</p>}
                 </div>
             ))}
         </main>

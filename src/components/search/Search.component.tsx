@@ -12,7 +12,7 @@ interface SearchProps {
 export default function Search({ searchTerm, setSearchTerm, beginSearchFetch, setBeginSearchFetch }: SearchProps) {
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setBeginSearchFetch(true);
     router.push(`/searchterm?query=${searchTerm}`);
@@ -42,7 +42,7 @@ export default function Search({ searchTerm, setSearchTerm, beginSearchFetch, se
   }, [beginSearchFetch])
 
   return (
-    <form className={styles.searchBar} onSubmit={(e: React.FormEvent<HTMLInputElement>) => handleSubmit(e)}>
+    <form className={styles.searchBar} onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleSubmit(e)}>
       <input name='searchTerm'
         value={searchTerm}
         onChange={(e: React.FormEvent<HTMLInputElement>) => setSearchTerm(e.target.value)} className={styles.searchInput} placeholder="Search"></input>

@@ -14,19 +14,21 @@ const LocalHeadlines = ({ country }: LocalHeadlinesProps) => {
     const [localHeadlinesLoading, setLocalHeadlinesLoading] = useState<boolean>(false)
    // const [errorMessage, setErrorMessage] = useState<string | null>(null)
        const today = new Date()
-                const lastWeek = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000)
-    //fetch and set localHeadlines
+        const lastWeek = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000)
+        const fromDate = lastWeek.toISOString().split('T')[0];
+        const toDate = today.toISOString().split('T')[0];
+    
+        //fetch and set localHeadlines
     const { data: localHeadlines, error: errorMessage } = useSWR(
         
         country
-          ? `http://newsapi.org/v2/everything?q=${country.city}&from=${lastWeek}&to=${today}&language=en&pageSize=5&apiKey=${process.env.NEXT_PUBLIC_NEWS_KEY}`
+          ? `http://newsapi.org/v2/everything?q=${country.city}&from=${fromDate}&to=${toDate}&language=en&pageSize=5&apiKey=${process.env.NEXT_PUBLIC_NEWS_KEY}`
           : null,
         async (url) => {
           const response = await fetch(url);
           const data = await response.json();
           console.log(data.articles)
           return data.articles;
-
         }
       );
    /* useEffect(() => {

@@ -45,7 +45,7 @@ export default function Search({ searchTerm, setSearchTerm, beginSearchFetch, se
     <form className={styles.searchBar} onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleSubmit(e)}>
       <input name='searchTerm'
         value={searchTerm}
-        onChange={(e: React.FormEvent<HTMLInputElement>) => setSearchTerm(e.target.value)} className={styles.searchInput} placeholder="Search"></input>
+        onChange={(e: React.FormEvent<HTMLInputElement>) => setSearchTerm((e.currentTarget as HTMLInputElement).value)} className={styles.searchInput} placeholder="Search"></input>
       <button type='submit' className={styles.searchButton}>
         <AiOutlineSearch />
       </button>
